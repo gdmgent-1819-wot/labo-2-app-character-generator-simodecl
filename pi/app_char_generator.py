@@ -21,13 +21,13 @@ try:
     })
 
     # As an admin, the app has access to read and write all data
-    firebase_ref_input = db.reference('input')
     firebase_ref_arcade_characters = db.reference('arcade-characters')
 except:
     print('Unable to initialize Firebase: {}'.format(sys.exc_info()[0]))
     sys.exit(1)
 
 # constants
+COLOR_RED = (255, 0, 0)
 COLOR_BLUE = (0, 0, 255)
 COLOR_BLACK = (0, 0, 0)
 
@@ -53,6 +53,24 @@ def get_random_arcade_matrix(rows, cols):
 
     return(matrix)
 
+def get_character_from_db():
+    characters = firebase_ref_arcade_characters.get()
+    i = 0
+    character = []
+    #print(characters)
+    if characters is not None:
+        for key, val in characters.items():
+            character.append(val)
+          
+
+        while i < len(character):
+            #print(character)
+            sense_hat.set_pixels(character[i])
+            i += 1
+            sleep(1)
+
+    else:
+        sense_hat.show_message("404")
 try:
     # SenseHat
     sense_hat = SenseHat()
@@ -61,24 +79,14 @@ except:
     print('Unable to initialize the Sense Hat library: {}'.format(sys.exc_info()[0]))
     sys.exit(1)
     
-def main(rows, cols):
+def main():
     while True:
-        matrix = get_random_arcade_matrix(rows, cols);
-        sense_hat.set_pixels(matrix)
-        data = {
-            "rows": rows,
-            "cols": cols,
-            "pattern": str(matrix)
-        }
-        firebase_ref_arcade_characters.push().set(data)
-        sleep(5)
+        get_character_from_db()
             
         
 if __name__ == "__main__":
     try:
-        rows = firebase_ref_input.child('rows').get()
-        cols = firebase_ref_input.child('cols').get()
-        main(rows,cols)
+        main()
     except (KeyboardInterrupt, SystemExit):
         print('Interrupt received! Stopping the application...')
     finally:

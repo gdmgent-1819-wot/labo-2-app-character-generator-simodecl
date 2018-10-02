@@ -1,4 +1,4 @@
-
+const firebaseRef= firebase.database().ref().child('arcade-characters');
 
      
 clickableGrid = ( rows, cols, callback ) => {
@@ -6,7 +6,7 @@ clickableGrid = ( rows, cols, callback ) => {
     const grid = document.querySelector('.grid')
     for (let r=0;r<rows;++r){
         const tr = grid.appendChild(document.createElement('tr'));
-        for (var c=0;c<cols;++c){
+        for (let c=0;c<cols;++c){
             const cell = tr.appendChild(document.createElement('td'));
             cell.addEventListener('click',((el,r,c,i) => {
                 return () => {
@@ -20,10 +20,22 @@ clickableGrid = ( rows, cols, callback ) => {
 
 let lastClicked;
 const grid = clickableGrid(8,8,(el,row,col,i) => {
-    console.log("You clicked on element:",el);
-    console.log("You clicked on row:",row);
-    console.log("You clicked on col:",col);
-    console.log("You clicked on item #:",i);
-
     el.classList.toggle("clicked")
 });
+
+const saveButton = document.querySelector('.save');
+
+
+saveButton.addEventListener('click', () => {
+    let bitString = "";
+    
+    let cols = document.querySelector('.grid').getElementsByTagName('td'), colslen = cols.length, i = -1;
+    while(++i < colslen){
+        if(cols[i].classList.contains("clicked")) {
+            bitString += "1"
+        } else {
+            bitString += "0"
+        }
+    }
+    firebaseRef.push().set({"string": bitString})
+})

@@ -4,24 +4,16 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 		<title>Arcade character generator</title>
-		<link rel="stylesheet" href="./assets/css/app.css"
+		<link rel="stylesheet" href="./assets/css/app.css">
   </head>
   <body>
-		<table class="grid"></table>
-		
+
+  <h1 class="title">Create your Arcade character</h1>  
+  <table class="grid"></table>
+  <button class="save">Save character</button>
+  
 	<script src="https://www.gstatic.com/firebasejs/5.5.2/firebase.js"></script>
-	<script>
-	  // Initialize Firebase
-	  var config = {
-		apiKey: "AIzaSyCiXl_TphevUSIgK5x3WPBBsINVBpCpVuc",
-		authDomain: "labo2-simodecl.firebaseapp.com",
-		databaseURL: "https://labo2-simodecl.firebaseio.com",
-		projectId: "labo2-simodecl",
-		storageBucket: "labo2-simodecl.appspot.com",
-		messagingSenderId: "108160617800"
-	  };
-	  firebase.initializeApp(config);
-	</script>
+	<script src="./assets/js/firebaseConfig.js"></script>
 	<script src="./assets/js/app.js"></script>
   </body>
 </html>

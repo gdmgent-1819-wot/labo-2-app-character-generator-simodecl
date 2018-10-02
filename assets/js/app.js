@@ -27,15 +27,15 @@ const saveButton = document.querySelector('.save');
 
 
 saveButton.addEventListener('click', () => {
-    let bitString = "";
+    let pattern = [];
     
     let cols = document.querySelector('.grid').getElementsByTagName('td'), colslen = cols.length, i = -1;
     while(++i < colslen){
         if(cols[i].classList.contains("clicked")) {
-            bitString += "1"
+            pattern.push([255,0,0])
         } else {
-            bitString += "0"
+            pattern.push([0,0,0])
         }
     }
-    firebaseRef.push().set({"string": bitString})
+    firebaseRef.push(pattern)
 })
